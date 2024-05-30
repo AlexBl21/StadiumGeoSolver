@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StadiumGeoSolver</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="b-cesped">
+    <header class="bg-gray-950 w-full h-28 flex gap-5 items-center">
+        <img class="w-28 h-full" src="https://th.bing.com/th/id/OIG3.k.2lyHUehc5ZVOhLXYsZ?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="logo">
+        <h1 class="text-white poetsen-one-regular text-2xl">StadiumGeoSolver</h1>
+    </header>
+    <main>
+        <section class="w-full py-5 b-cesped">
+            <article class="mx-auto w-10/12 p-5 gap-5 bg-slate-900 rounded-md text-white flex flex-col">
+                <h1 class="text-white poetsen-one-regular text-2xl mx-auto">Elige la forma más parecida a tu estadio</h1>
+                <div class="flex p-5 gap-5 justify-evenly">
+                    <div class="rounded-md bg-slate-800 p-4 transform duration-300 hover:scale-110 hover:bg-slate-700 flex flex-col items-center gap-4">
+                        <h1 class="text-xl font-bold">Estadio Elíptico</h1>
+                        <img class="w-60 rounded-md h-60" src="https://th.bing.com/th/id/OIG4.hXQj8BvRu3BF5oGliOtN?pid=ImgGn" alt="">
+                        <p class="mb-2 text-center">El estadio presenta una forma <br>elíptica completa sin partes rectas</p>
+                        <div class="flex items-center gap-4">
+                            <button onclick="window.location.href='infoElip.html'" class="bg-red-500 py-2 px-3 font-bold transform duration-300 hover:scale-110 rounded-full">
+                                Agregar Medidas
+                            </button>
+                        </div>
+                    </div>
+                    <div class="rounded-md bg-slate-800 p-4 transform duration-300 hover:scale-110 hover:bg-slate-700 flex flex-col items-center gap-4">
+                        <h1 class="text-xl font-bold">Estadio con bordes Curvos</h1>
+                        <img class="w-60 rounded-md h-60" src="https://th.bing.com/th/id/OIG4.FJYVYWBwC.u47Y6Dv9YJ?pid=ImgGn" alt="">
+                        <p class="mb-2 text-center">El estadio presenta una forma <br> rectangular con bordes circulares</p>
+                        <div class="flex items-center gap-4">
+                            <button onclick="window.location.href='infoRec.html'" class="bg-red-500 py-2 px-3 font-bold transform duration-300 hover:scale-110 rounded-full">
+                                Agregar Medidas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="./code.js"></script>
+</html>

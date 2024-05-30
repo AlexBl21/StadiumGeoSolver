@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Borel&family=Cabin&family=Dancing+Script&family=Lato:wght@100;300;400&family=Lumanosimo&family=Poetsen+One&family=Roboto:wght@100&family=Sedgwick+Ave+Display&family=Ubuntu:wght@300&display=swap');
+
+.poetsen-one-regular {
+    font-family: "Poetsen One", sans-serif;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.b-cesped{
+    background: url("https://st4.depositphotos.com/16122460/22960/i/450/depositphotos_229609862-stock-photo-artificial-grass-carpet-background-top.jpg");
+    
+}
+

@@ -16,28 +16,31 @@
     <main>
         <section class="w-full py-5 b-cesped">
             <article class="mx-auto w-10/12 p-5 gap-5 bg-slate-900 rounded-md text-white flex flex-col">
-                <h1 class="text-white poetsen-one-regular text-2xl mx-auto">Elige la forma más parecida a tu estadio</h1>
+                <h1 class="text-white poetsen-one-regular text-2xl mx-auto">Calcula la ecuacion diferencial del tiempo de llenado de tu estadio</h1>
                 <div class="flex p-5 gap-5 justify-evenly">
-                    <div class="rounded-md bg-slate-800 p-4 transform duration-300 hover:scale-110 hover:bg-slate-700 flex flex-col items-center gap-4">
-                        <h1 class="text-xl font-bold">Estadio Elíptico</h1>
+                    <div class=" max-w-3xl rounded-md bg-slate-800 p-4 transform duration-300 flex flex-col gap-4">
+                        <h1 class="text-2xl font-bold">Información sobre tu ecuación</h1>
+                        <p>Bienvenido a nuestra herramienta de cálculo del tiempo necesario para llenar un estadio. Para realizar esta estimación, necesitaremos que ingreses algunas variables clave. A continuación, te proporcionamos una explicación detallada de cada una:</p>
+                        <ul class="text-x ">
+                            <li class="list-disc mx-2 mb-4"><strong>Capacidad del estadio (C):</strong> La capacidad del estadio es el número total de asientos disponibles en el estadio. Por favor, ingresa este valor en números enteros. Ejemplo: Si el estadio tiene 50,000 asientos, ingresa 50000.</li>
+                            <li class="list-disc mx-2 mb-4"><strong>Tasa de Llegada Inicial (𝜆0):</strong> La tasa de llegada inicial es el número de personas que llegan al estadio por unidad de tiempo (por ejemplo, por minuto) al inicio del proceso de entrada. Este valor debe ser un número. Ejemplo: Si al inicio llegan 1000 personas por minuto, ingresa 1000.</li>
+                            <li class="list-disc mx-2 mb-4"><strong>Tasa de Llegada Final (𝜆𝑓):</strong> La tasa de llegada final es la tasa de llegada de personas al estadio cuando se aproxima a llenarse. Este valor también debe ser un número. Ejemplo: Si cuando el estadio está casi lleno, la tasa de llegada es de 100 personas por minuto, ingresa 100.</li>
+                            <li class="list-disc mx-2 mb-4"><strong>Tiempo de Entrada (T):</strong> El tiempo de entrada es el tiempo total durante el cual las personas están llegando al estadio, medido en minutos. Por favor, ingresa este valor en minutos. Ejemplo: Si el periodo de entrada dura 120 minutos, ingresa 120.</li>
+                            <li class="list-disc mx-2 mb-4"><strong>Factor de Decaimiento de la Tasa de Llegada (k):</strong> El factor de decaimiento es un parámetro que indica cómo disminuye la tasa de llegada de personas con el tiempo. Este valor debe ser un número positivo. Ejemplo: Si la tasa de llegada disminuye con un factor de 0.05, ingresa 0.05.</li>
+                            <li class="list-disc mx-2 mb-4"><strong>Número de Puertas de Entrada (P):</strong> El número de puertas de entrada es el total de puertas disponibles para el ingreso de personas al estadio. Este valor debe ser un número entero. Ejemplo: Si hay 10 puertas de entrada, ingresa 10.</li>
+                        </ul>
+                    </div>
+                    <div class="rounded-md bg-slate-800 p-4 transform duration-300 hover:scale-110 hover:bg-slate-700 flex flex-col items-center gap-4 h-1/2">
+                        <h1 class="text-xl font-bold">Tus medidas</h1>
                         <img class="w-60 rounded-md h-60" src="https://th.bing.com/th/id/OIG4.hXQj8BvRu3BF5oGliOtN?pid=ImgGn" alt="">
-                        <p class="mb-2 text-center">El estadio presenta una forma <br>elíptica completa sin partes rectas</p>
+                        <p class="mb-2 text-center">en esta seccion puedes agregar <br> las medidas de tu estadio</p>
                         <div class="flex items-center gap-4">
-                            <button onclick="window.location.href='infoElip.html'" class="bg-red-500 py-2 px-3 font-bold transform duration-300 hover:scale-110 rounded-full">
+                            <button onclick="window.location.href='formulario.html'" class="bg-red-500 py-2 px-3 font-bold transform duration-300 hover:scale-110 rounded-full">
                                 Agregar Medidas
                             </button>
                         </div>
                     </div>
-                    <div class="rounded-md bg-slate-800 p-4 transform duration-300 hover:scale-110 hover:bg-slate-700 flex flex-col items-center gap-4">
-                        <h1 class="text-xl font-bold">Estadio con bordes Curvos</h1>
-                        <img class="w-60 rounded-md h-60" src="https://th.bing.com/th/id/OIG4.FJYVYWBwC.u47Y6Dv9YJ?pid=ImgGn" alt="">
-                        <p class="mb-2 text-center">El estadio presenta una forma <br> rectangular con bordes circulares</p>
-                        <div class="flex items-center gap-4">
-                            <button onclick="window.location.href='infoRec.html'" class="bg-red-500 py-2 px-3 font-bold transform duration-300 hover:scale-110 rounded-full">
-                                Agregar Medidas
-                            </button>
-                        </div>
-                    </div>
+                    
                 </div>
             </article>
         </section>

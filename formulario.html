@@ -15,18 +15,20 @@
     
     <main class="flex items-center justify-center w-full my-20">
         <a href="index.html" class="bg-red-500 text-white py-2 px-4 font-bold rounded-full mt-4 hover:bg-red-700 absolute top-28 left-5">Regresar</a>
-
-        <section id="rectangularFormContainer" class="p-4 bg-white rounded-lg w-96 shadow-2xl shadow-black">
-            <form id="rectangularForm" class="flex flex-col space-y-4">
+        <section id="formulario" class="p-4 bg-white rounded-lg w-96 shadow-2xl shadow-black">
+            <form id="formulari" class="flex flex-col space-y-4">
                 <h1 class="text-xl mb-4">Registrar Informacion</h1>
-                <input id="rectangularL" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Longitud del rectángulo (L)">
-                <input id="rectangularW" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Ancho del rectángulo (W)">
-                <input id="rectangularR" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Radio de las esquinas (R)">
+                <input id="capacidad" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Capacidad del estadio (C)">
+                <input id="tasaLlegadaInicial" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Tasa de Llegada Inicial (𝜆0)">
+                <input id="tasaLlegadaFinal" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Tasa de Llegada Final (𝜆𝑓)">
+                <input id="tiempoEntrada" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Tiempo de Entrada (T)">
+                <input id="fDeacimiento" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Factor de Decaimiento de la Tasa de Llegada (k)">
+                <input id="nPuertas" class="p-2 bg-gray-300 rounded-lg" type="text" placeholder="Número de Puertas de Entrada (P)">
                 <div class="flex gap-2">
-                    <button id="calculateRectangular" class="bg-green-500 py-2 px-4 font-bold transform duration-300 hover:scale-110 rounded-full">
+                    <button id="calculate" class="bg-green-500 py-2 px-4 font-bold transform duration-300 hover:scale-110 rounded-full">
                         Calcular
                     </button>
-                    <button id="clearRectangular" class="bg-gray-500 py-2 px-4 font-bold transform duration-300 hover:scale-110 rounded-full">
+                    <button id="clear" class="bg-gray-500 py-2 px-4 font-bold transform duration-300 hover:scale-110 rounded-full">
                         Borrar
                     </button>
                 </div>

@@ -1,133 +1,170 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const elipticForm = document.querySelector("#elipticForm");
-    const rectangularForm = document.querySelector("#rectangularForm");
+document.addEventListener('DOMContentLoaded', () => {
+    const calculateButton = document.getElementById('calculate');
+    const clearButton = document.getElementById('clear');
+    const formulario = document.getElementById('formulario');
 
-    // Función para manejar el formulario del estadio elíptico
-    if (elipticForm) {
-        const calculateButton = elipticForm.querySelector("#calculateEliptic");
-        const clearButton = elipticForm.querySelector("#clearEliptic");
+    calculateButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        calcularLlenadoEstadio();
+    });
 
-        calculateButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            const a = parseFloat(document.querySelector("#elipticA").value);
-            const b = parseFloat(document.querySelector("#elipticB").value);
-            if (isNaN(a) || isNaN(b) || a <= 0 || b <= 0) {
-                alert("Por favor, ingresa valores válidos y positivos para los ejes.");
-                return;
-            }
-            showElipticEquation(a, b);
-        });
+    clearButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        limpiarFormulario();
+    });
 
-        clearButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            document.querySelector("#elipticA").value = '';
-            document.querySelector("#elipticB").value = '';
-        });
-    }
+    function calcularLlenadoEstadio() {
+        // Obtener los valores de los inputs
+        const capacidad = parseFloat(document.getElementById('capacidad').value);
+        const tasaLlegadaInicial = parseFloat(document.getElementById('tasaLlegadaInicial').value);
+        const tasaLlegadaFinal = parseFloat(document.getElementById('tasaLlegadaFinal').value);
+        const tiempoEntrada = parseFloat(document.getElementById('tiempoEntrada').value);
+        const factorDecaimiento = parseFloat(document.getElementById('fDeacimiento').value);
+        const nPuertas = parseInt(document.getElementById('nPuertas').value);
 
-    // Función para manejar el formulario del estadio rectangular con bordes curvos
-    if (rectangularForm) {
-        const calculateButton = rectangularForm.querySelector("#calculateRectangular");
-        const clearButton = rectangularForm.querySelector("#clearRectangular");
+        // Calcular la ecuación diferencial del tiempo de llenado del estadio
+        // Tasa de cambio de la llegada de personas
+        const lambda_t = (t) => tasaLlegadaInicial * Math.exp(-factorDecaimiento * t) + tasaLlegadaFinal;
 
-        calculateButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            const L = parseFloat(document.querySelector("#rectangularL").value);
-            const W = parseFloat(document.querySelector("#rectangularW").value);
-            const R = parseFloat(document.querySelector("#rectangularR").value);
-            if (isNaN(L) || isNaN(W) || isNaN(R) || L <= 0 || W <= 0 || R <= 0) {
-                alert("Por favor, ingresa valores válidos y positivos para las dimensiones.");
-                return;
-            }
-            showRectangularEquation(L, W, R);
-        });
+        // Integrar la tasa de cambio para encontrar el tiempo total de llenado
+        let tiempoLlenado = 0;
+        let integral = 0;
+        const dt = 0.1; // Aumentar el intervalo de tiempo para hacer la simulación más rápida
 
-        clearButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            document.querySelector("#rectangularL").value = '';
-            document.querySelector("#rectangularW").value = '';
-            document.querySelector("#rectangularR").value = '';
-        });
-    }
-
-    function showElipticEquation(a, b) {
-        const container = document.querySelector("#elipticFormContainer");
-        container.innerHTML = `
-            <h1 class="text-2xl">Ecuación Diferencial del Estadio Elíptico</h1>
-            <p class="text-xl">Ecuación: (x^2 / ${a}^2) + (y^2 / ${b}^2) = 1</p>
-            <canvas id="elipticChart" width="400" height="400"></canvas>
-        `;
-        renderElipticChart(a, b);
-    }
-
-    function showRectangularEquation(L, W, R) {
-        const container = document.querySelector("#rectangularFormContainer");
-        container.innerHTML = `
-            <h1 class="text-2xl">Ecuación Diferencial del Estadio Rectangular con Bordes Curvos</h1>
-            <p class="text-xl">Ecuación: (x^2 / ${R}^2) + (y^2 / ${R}^2) = 1, y otras ecuaciones para las secciones rectas y los semicírculos</p>
-            <canvas id="rectangularChart" width="400" height="400"></canvas>
-        `;
-        renderRectangularChart(L, W, R);
-    }
-
-    function renderElipticChart(a, b) {
-        const ctx = document.getElementById('elipticChart').getContext('2d');
-        const data = [];
-        for (let x = -a; x <= a; x += 0.1) {
-            const y = Math.sqrt(b * b * (1 - (x * x) / (a * a)));
-            data.push({x, y});
-            data.push({x, y: -y});
+        while (integral < capacidad) {
+            integral += lambda_t(tiempoLlenado) * dt;
+            tiempoLlenado += dt;
         }
-        new Chart(ctx, {
-            type: 'scatter',
+
+        // Expandir el section del formulario al doble de su ancho
+        formulario.style.width = '80%';
+        formulario.style.margin = '15px';
+
+        // Limpiar el contenido del formulario
+        formulario.innerHTML = '';
+
+        // Crear las tarjetas de resultados
+        const resultsHTML = `
+            <h2 class="text-xl mb-4">Resultados</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Ecuación Diferencial:</h3>
+                    <p class="mt-2">dP/dt = λ(t) = ${tasaLlegadaInicial} * exp(-${factorDecaimiento} * t) + ${tasaLlegadaFinal}</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Capacidad del estadio (C):</h3>
+                    <p class="mt-2">${capacidad}</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Tasa de Llegada Inicial (λ0):</h3>
+                    <p class="mt-2">${tasaLlegadaInicial}</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Tasa de Llegada Final (λf):</h3>
+                    <p class="mt-2">${tasaLlegadaFinal}</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Tiempo de Entrada (T):</h3>
+                    <p class="mt-2">${tiempoEntrada}</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Factor de Decaimiento (k):</h3>
+                    <p class="mt-2">${factorDecaimiento}</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Número de Puertas (P):</h3>
+                    <p class="mt-2">${nPuertas}</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Tiempo de Llenado del Estadio:</h3>
+                    <p class="mt-2">${tiempoLlenado.toFixed(2)} minutos</p>
+                </div>
+                <div class="card bg-white p-4 mb-4 rounded-lg shadow-md">
+                    <h3 class="font-bold">Simulación del Llenado:</h3>
+                    <div class="simulacion-llenado">
+                        <div id="stadium-simulation" style="position: relative; width: 100%; height: 100px; background: #e0e0e0;">
+                            <div id="stadium-fill" style="position: absolute; bottom: 0; width: 100%; height: 0; background: #76c7c0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <canvas id="graph" class="bg-white p-4 rounded-lg shadow-md"></canvas>
+        `;
+
+        // Insertar el HTML de los resultados
+        formulario.innerHTML = resultsHTML;
+
+        // Crear la gráfica usando Chart.js
+        const ctx = document.getElementById('graph').getContext('2d');
+        const labels = [];
+        const data = [];
+        let t = 0;
+
+        const chart = new Chart(ctx, {
+            type: 'line',
             data: {
+                labels: labels,
                 datasets: [{
-                    label: 'Estadio Elíptico',
+                    label: 'Tasa de Llegada (λ(t))',
                     data: data,
-                    showLine: true,
-                    borderColor: 'red',
-                    backgroundColor: 'red',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false
                 }]
             },
             options: {
                 scales: {
-                    x: { type: 'linear', position: 'bottom' },
-                    y: { type: 'linear' }
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tiempo (minutos)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Tasa de Llegada (personas/minuto)'
+                        }
+                    }
                 }
             }
         });
+
+        // Simular el llenado del estadio y construir la gráfica
+        let integralSim = 0;
+        const simulationDuration = 1000; // <---- MODIFICA ESTE VALOR
+        const steps = Math.ceil(simulationDuration / dt); // Número de pasos en la simulación
+        const intervalTime = simulationDuration / steps; // Tiempo entre cada paso
+
+        const interval = setInterval(() => {
+            if (integralSim >= capacidad || t >= tiempoLlenado) {
+                clearInterval(interval);
+                return;
+            }
+            integralSim += lambda_t(t) * dt;
+            labels.push(t.toFixed(2));
+            data.push(lambda_t(t));
+            chart.update();
+
+            // Actualizar la simulación del llenado del estadio
+            const fillPercentage = (integralSim / capacidad) * 100;
+            document.getElementById('stadium-fill').style.height = `${fillPercentage}%`;
+
+            t += dt;
+        }, intervalTime);
     }
 
-    function renderRectangularChart(L, W, R) {
-        const ctx = document.getElementById('rectangularChart').getContext('2d');
-        const data = [];
-        for (let x = -L / 2; x <= L / 2; x += 0.1) {
-            if (Math.abs(x) > (L / 2 - R)) {
-                const y = Math.sqrt(R * R - Math.pow(Math.abs(x) - L / 2 + R, 2));
-                data.push({x, y});
-                data.push({x, y: -y});
-            } else {
-                data.push({x, y: W / 2});
-                data.push({x, y: -W / 2});
-            }
-        }
-        new Chart(ctx, {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Estadio Rectangular con Bordes Curvos',
-                    data: data,
-                    showLine: true,
-                    borderColor: 'blue',
-                    backgroundColor: 'blue',
-                }]
-            },
-            options: {
-                scales: {
-                    x: { type: 'linear', position: 'bottom' },
-                    y: { type: 'linear' }
-                }
-            }
-        });
+    function limpiarFormulario() {
+        document.getElementById('capacidad').value = '';
+        document.getElementById('tasaLlegadaInicial').value = '';
+        document.getElementById('tasaLlegadaFinal').value = '';
+        document.getElementById('tiempoEntrada').value = '';
+        document.getElementById('fDeacimiento').value = '';
+        document.getElementById('nPuertas').value = '';
+
+        // Limpiar el contenido del formulario y restablecer el ancho
+        const formulario = document.getElementById('formulario');
+        formulario.innerHTML = '';
+        formulario.style.width = '100%';
     }
 });
